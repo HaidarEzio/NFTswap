@@ -1,11 +1,12 @@
 import tw from "tailwind-styled-components";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Input, Button, Loading } from "@nextui-org/react";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { useConnect, useAccount, useDisconnect, chain } from "wagmi";
 import EthName from "../components/ETHName";
-import swap from "../utils/swapping";
+import { swap } from "../utils/swapping";
 
 const Container = tw.div`
   flex
@@ -28,6 +29,7 @@ const Containing = tw.form`
   bg-red-400
   `;
 export default function App() {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       nftHolder: "",
@@ -35,6 +37,7 @@ export default function App() {
       myNFT: "",
     },
     validationSchema: Yup.object({
+      myNFT: Yup.string().min(42, "Must be 42 characters or less").required("required"),
       nftHolder: Yup.string().min(42, "Must be 42 characters or less").required("required"),
       nftContract: Yup.string().min(42, "Must be 42 characters or less").required("required as well"),
     }),
@@ -42,11 +45,14 @@ export default function App() {
       //! the values are as follows
       // {
       //*  myNFT: "0x8Ec5fAC5fCB3e9B254d5BA06eF7F74569d0fba0A"
-      //*  nftContract: "0x5998AbEf6ac2105682f7799a75d4c23e423B6AbE";
       //*  nftHolder: "0x4436C8962589a491D575f7531e7f8CB79A19aEBD";
+      //*  nftContract: "0x5998AbEf6ac2105682f7799a75d4c23e423B6AbE";
       // }
       swap(account.address, values.myNFT, values.nftHolder, values.nftContract);
-      console.log(values);
+
+      console.log(swap(account.address, values.myNFT, values.nftHolder, values.nftContract));
+
+      router.push("/taker");
     },
   });
   const { connect, error, isConnecting, pendingConnector } = useConnect({

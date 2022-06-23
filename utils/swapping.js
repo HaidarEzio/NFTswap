@@ -1,19 +1,22 @@
 import { NftSwap } from "@traderxyz/nft-swap-sdk";
 import { ethers } from "ethers";
 let takerData;
+let tokenCred;
+let takerAddress;
 export async function part2() {
   let signedOrder = takerData;
   console.log(signedOrder);
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const CHAIN_ID = 4; //rinkeby
+
   const Aether_420 = {
-    tokenAddress: "0x5998AbEf6ac2105682f7799a75d4c23e423B6AbE",
+    tokenAddress: nftContract,
     tokenId: "420",
     type: "ERC721",
   };
 
   // User B Trade Data
-  const walletAddressUserB = "0x4436C8962589a491D575f7531e7f8CB79A19aEBD";
+  const walletAddressUserB = takerAddress;
   const assetsToSwapUserB = [Aether_420];
   // ............................
   // Part 2 of the trade -- User B (the 'taker') accepts and fills order from User A and completes trade
@@ -46,6 +49,7 @@ export async function part2() {
 
 export async function swap(userAddress, userNFT, nftHolder, nftContract, callback) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  takerAddress = nftHolder;
 
   const signer = provider.getSigner();
   console.log(signer);
@@ -60,6 +64,7 @@ export async function swap(userAddress, userNFT, nftHolder, nftContract, callbac
     tokenId: "420",
     type: "ERC721",
   };
+  tokenCred = Aether_420;
   // User A Trade Data
   const walletAddressUserA = userAddress;
   const assetsToSwapUserA = [Oizys_69];

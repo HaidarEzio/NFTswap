@@ -45,12 +45,13 @@ export default function App() {
       //! the values are as follows
       // {
       //*  myNFT: "0x8Ec5fAC5fCB3e9B254d5BA06eF7F74569d0fba0A"
-      //*  nftHolder: "0x4436C8962589a491D575f7531e7f8CB79A19aEBD";
+      //*  nftHolder1: "0xD512872bB6448aCF6926C6C503d0Ceb8002C0557";
+      //*  nftHolder2: "0x4436C8962589a491D575f7531e7f8CB79A19aEBD";
       //*  nftContract: "0x5998AbEf6ac2105682f7799a75d4c23e423B6AbE";
+      //! New NFTs
+      //*
       // }
       swap(account.address, values.myNFT, values.nftHolder, values.nftContract);
-
-      console.log(swap(account.address, values.myNFT, values.nftHolder, values.nftContract));
 
       router.push("/taker");
     },

@@ -1,5 +1,8 @@
 import tw from "tailwind-styled-components";
-import { Button, Loading } from "@nextui-org/react";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Input, Button, Loading } from "@nextui-org/react";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { useConnect, useAccount, useDisconnect, chain } from "wagmi";
 
@@ -27,9 +30,17 @@ const Containing = tw.form`
   `;
 
 const Taker = () => {
-  const handleClick = () => {
-    part2();
-  };
+  const formik = useFormik({
+    initialValues: {
+      nft: "",
+    },
+    validationSchema: Yup.object({
+      nft: Yup.string().min(42, "Must be 42 characters or less").required("required"),
+    }),
+    onSubmit: (values) => {
+      part2(account.address, values.nft);
+    },
+  });
   const { connect, error, isConnecting, pendingConnector } = useConnect({
     chainId: chain.rinkeby.id,
     connector: new MetaMaskConnector(),
@@ -39,9 +50,22 @@ const Taker = () => {
 
   return (
     <Container>
-      <Containing>
+      <Containing onSubmit={formik.handleSubmit}>
         <Header>NFT swapping by DRIP.</Header>
         {account ? <EthName address={account.address} /> : null}
+        <div>
+          <Input
+            type="text"
+            name="nft"
+            id="nft"
+            {...formik.getFieldProps("nft")}
+            disabled={!account ? true : false}
+            clearable
+            size="lg"
+            labelPlaceholder="NFT Contract"
+          />
+        </div>
+        {formik.touched.nft && formik.errors.nft ? <p>{formik.errors.nft}</p> : null}
         {!account ? (
           <Button
             css={{ background: "#df0d0de4" }}
@@ -53,7 +77,7 @@ const Taker = () => {
         ) : (
           <>
             <div>Connected to {account?.connector?.name}</div>
-            <Button onClick={handleClick} css={{ background: "#f50b0b" }}>
+            <Button type="submit" css={{ background: "#f50b0b" }}>
               Fill the order !
             </Button>
             <Button css={{ background: "#290ddfe3" }} onClick={disconnect}>

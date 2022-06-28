@@ -1,12 +1,9 @@
 import { NftSwap } from "@traderxyz/nft-swap-sdk";
 import { ethers } from "ethers";
 
-let takerData;
+export async function part2(userAddress, userNFT, makerData) {
+  let signedOrder = makerData;
 
-export async function part2(userAddress, userNFT) {
-  let signedOrder = takerData;
-
-  console.log(signedOrder);
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
   const CHAIN_ID = 4; //rinkeby
@@ -45,15 +42,19 @@ export async function part2(userAddress, userNFT) {
   });
   console.log(fillTx);
   const fillTxReceipt = await nftSwapSdk.awaitTransactionHash(fillTx.hash);
+
   console.log(`🎉 🥳 Order filled. TxHash: ${fillTxReceipt.transactionHash}`);
+
+  return fillTxReceipt.transactionHash;
 }
 
-export async function swap(userAddress, userNFT, nftHolder, nftContract) {
+export async function swap(userAddress, userNFT, nftContract) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
   const signer = provider.getSigner();
-  console.log(signer);
+
   const CHAIN_ID = 4; //rinkeby
+
   const Oizys_69 = {
     tokenAddress: userNFT,
     tokenId: "69",
@@ -69,7 +70,7 @@ export async function swap(userAddress, userNFT, nftHolder, nftContract) {
   const assetsToSwapUserA = [Oizys_69];
 
   // User B Trade Data
-  const walletAddressUserB = nftHolder;
+  // const walletAddressUserB = nftHolder;
   const assetsToSwapUserB = [Aether_420];
   // ............................
   // Part 1 of the trade -- User A (the 'maker') initiates an order
@@ -95,12 +96,11 @@ export async function swap(userAddress, userNFT, nftHolder, nftContract) {
   // Sign the order (User A signs since they are initiating the trade)
   const signedOrder = await nftSwapSdk.signOrder(order, walletAddressUserA);
   // Part 1 Complete. User A is now done. Now we send the `signedOrder` to User B to complete the trade.
-  takerData = signedOrder;
+  return signedOrder;
   // console.log({
   //   userAddress,
   //   userNFT,
   //   nftHolder,
   //   nftContract,
   // });
-  return signedOrder;
 }

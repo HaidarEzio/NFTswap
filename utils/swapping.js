@@ -65,9 +65,14 @@ export async function swap(userAddress, userNFT, nftContract) {
     tokenId: "420",
     type: "ERC721",
   };
+  const EthComp = {
+    tokenAddress: "0x0f39320435539b0c3296684D6796Ac0694b7DF74",
+    amount: ethers.utils.parseUnits("1000", 18).toString(),
+    type: "ERC20",
+  };
   // User A Trade Data
   const walletAddressUserA = userAddress;
-  const assetsToSwapUserA = [Oizys_69];
+  const assetsToSwapUserA = [Oizys_69, EthComp];
 
   // User B Trade Data
   // const walletAddressUserB = nftHolder;

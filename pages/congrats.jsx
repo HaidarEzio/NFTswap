@@ -16,7 +16,7 @@ const Congrats = () => {
   if (txhash) {
     return (
       <div className="flex flex-col items-center justify-center w-screen h-screen">
-        <h1>Congratulations !!!</h1>
+        <h1>Congratulations 🎉🥳 !!!</h1>
 
         <h1>
           Click{" "}

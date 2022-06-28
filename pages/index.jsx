@@ -9,9 +9,9 @@ import EthName from "../components/ETHName";
 import { swap } from "../utils/swapping";
 import { useContext, useState } from "react";
 import { ACTION_TYPES, StoreContext } from "../store/store-context";
-
+import Head from "next/head";
 const Container = tw.div` flex items-center justify-center flex-col w-full h-screen  `;
-const Header = tw.h1`text-2xl font-bold`;
+const Header = tw.h1`text-3xl font-bold`;
 const Containing = tw.form` flex items-center justify-between flex-col w-[25rem] h-[40rem] py-5 rounded-2xl  bg-red-400`;
 const Loader = tw.h2`font-bold text-red-700 `;
 const Required = tw.h6`font-bold text-red-700 rounded`;
@@ -88,6 +88,9 @@ export default function App() {
 
   return (
     <Container>
+      <Head>
+        <title>NFT Swap: Maker</title>
+      </Head>
       <Containing onSubmit={formik.handleSubmit}>
         <Header>NFT swapping by DRIP.</Header>
         {account ? <EthName address={account.address} /> : <h3>Please connect your wallet !</h3>}

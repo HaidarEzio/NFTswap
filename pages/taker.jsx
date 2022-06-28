@@ -9,6 +9,7 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { part2 } from "../utils/swapping";
 import { ACTION_TYPES, StoreContext } from "../store/store-context";
 import EthName from "../components/ETHName";
+import Head from "next/head";
 
 const Container = tw.div`
   flex items-center justify-center flex-col w-full h-screen 
@@ -87,6 +88,9 @@ const Taker = () => {
   if (makerData) {
     return (
       <Container>
+        <Head>
+          <title>NFT Swap: Taker</title>
+        </Head>
         <Containing onSubmit={formik.handleSubmit}>
           <Header>NFT swapping by DRIP.</Header>
           {account ? <EthName address={account.address} /> : null}

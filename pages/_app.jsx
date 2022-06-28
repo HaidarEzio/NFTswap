@@ -3,6 +3,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { WagmiConfig, createClient, defaultChains, configureChains } from "wagmi";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import StoreProvider from "../store/store-context";
 const alchemyId = process.env.ALCHEMY_ID;
 
 export const { provider } = configureChains(defaultChains, [alchemyProvider({ alchemyId })]);
@@ -14,11 +15,13 @@ const client = createClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <WagmiConfig client={client}>
-      <NextUIProvider>
-        <Component {...pageProps} />
-      </NextUIProvider>
-    </WagmiConfig>
+    <StoreProvider>
+      <WagmiConfig client={client}>
+        <NextUIProvider>
+          <Component {...pageProps} />
+        </NextUIProvider>
+      </WagmiConfig>
+    </StoreProvider>
   );
 }
 

@@ -10,9 +10,10 @@ import { swap } from "../utils/swapping";
 import { useContext, useState } from "react";
 import { ACTION_TYPES, StoreContext } from "../store/store-context";
 import Head from "next/head";
-const Container = tw.div` flex items-center justify-center flex-col w-full h-screen  `;
-const Header = tw.h1`text-3xl font-bold`;
-const Containing = tw.form` flex items-center justify-between flex-col w-[25rem] h-[40rem] py-5 rounded-2xl  bg-red-400`;
+
+const Container = tw.div` text-white flex items-center justify-center flex-col w-full h-screen   `;
+const Header = tw.h1`text-3xl font-bold mx-5 my-1`;
+const Containing = tw.form` flex items-center justify-between flex-col w-fit h-[36rem] px-5 py-5 my-5 rounded-3xl  `;
 const Loader = tw.h2`font-bold text-red-700 `;
 const Required = tw.h6`font-bold text-red-700 rounded`;
 
@@ -91,8 +92,8 @@ export default function App() {
       <Head>
         <title>NFT Swap: Maker</title>
       </Head>
-      <Containing onSubmit={formik.handleSubmit}>
-        <Header>NFT swapping by DRIP.</Header>
+      <Containing className="glass" onSubmit={formik.handleSubmit}>
+        <Header>NFT &lt;&gt; NFT Swapping</Header>
         {account ? <EthName address={account.address} /> : <h3>Please connect your wallet !</h3>}
         <div>
           <Input
@@ -101,8 +102,7 @@ export default function App() {
             id="myNFT"
             clearable
             size="lg"
-            placeholder={!account ? "My NFT contract" : false}
-            labelPlaceholder={account ? "My NFT contract" : false}
+            placeholder="My NFT contract"
             disabled={!account ? true : false}
             {...formik.getFieldProps("myNFT")}
           />
@@ -117,8 +117,7 @@ export default function App() {
             disabled={!account ? true : false}
             clearable
             size="lg"
-            placeholder={!account ? "NFT holder" : false}
-            labelPlaceholder={account ? "NFT holder" : false}
+            placeholder="NFT holder"
             {...formik.getFieldProps("nftHolder")}
           />
           {formik.touched.nftHolder && formik.errors.nftHolder ? <p>{formik.errors.nftHolder}</p> : null}
@@ -131,8 +130,7 @@ export default function App() {
             disabled={!account ? true : false}
             clearable
             size="lg"
-            placeholder={!account ? "Other NFT Contract" : false}
-            labelPlaceholder={account ? "Other NFT Contract" : false}
+            placeholder="Other NFT Contract"
             {...formik.getFieldProps("nftContract")}
           />
 
@@ -152,10 +150,10 @@ export default function App() {
             <div>
               Connected to <span className="font-bold">{account?.connector?.name}</span> !
             </div>
-            <Button type="submit" css={{ background: "#f50b0b" }}>
+            <Button type="submit" css={{ background: "#ca1010" }}>
               Swap !
             </Button>
-            <Button css={{ background: "#290ddfe3" }} onClick={disconnect}>
+            <Button css={{ background: "#220abe" }} onClick={disconnect}>
               Disconnect
             </Button>
           </>
@@ -171,6 +169,16 @@ export default function App() {
           <Loader></Loader>
         </Modal>
       )}
+      <p className="footer__text">
+        Made with 🖤 by{" "}
+        <a href="https://haidarezio.me/" target="_blank">
+          <img className="footer__logo--svg" src="./rorschach BW.svg" alt="logo" valign="middle" />
+        </a>
+        using{" "}
+        <a className="text-red-400 transition-all hover:text-red-600" href="https://github.com/trader-xyz/nft-swap-sdk" target="_blank">
+          trader-xyz Swap SDK
+        </a>
+      </p>
     </Container>
   );
 }

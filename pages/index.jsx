@@ -169,6 +169,7 @@ export default function App() {
           <Loader></Loader>
         </Modal>
       )}
+      <h4 className="mt-1">this example uses the Rinkeby Testnet</h4>
       <p className="footer__text">
         Made with 🖤 by{" "}
         <a href="https://haidarezio.me/" target="_blank">

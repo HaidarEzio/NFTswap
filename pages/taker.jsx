@@ -11,11 +11,13 @@ import { ACTION_TYPES, StoreContext } from "../store/store-context";
 import EthName from "../components/ETHName";
 import Head from "next/head";
 
+//* this is styling
 const Container = tw.div` text-white flex items-center justify-center flex-col w-full h-screen   `;
 const Header = tw.h1`text-3xl font-bold mx-5 my-1`;
 const Containing = tw.form` flex items-center justify-between flex-col w-fit h-[40rem] py-5 rounded-3xl  `;
 const Loader = tw.h2`font-bold text-red-700 `;
 const Required = tw.h6`font-bold text-red-700 rounded`;
+//* this is styling
 
 const Taker = () => {
   const router = useRouter();
@@ -23,6 +25,7 @@ const Taker = () => {
     state: { makerData, takerData },
   } = useContext(StoreContext);
   const { dispatch } = useContext(StoreContext);
+  //* a second wallet needs to connect for the swap to work
   const { connect, error, isConnecting, pendingConnector } = useConnect({
     chainId: chain.rinkeby.id,
     connector: new MetaMaskConnector(),

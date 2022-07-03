@@ -11,15 +11,19 @@ import { useContext, useState } from "react";
 import { ACTION_TYPES, StoreContext } from "../store/store-context";
 import Head from "next/head";
 
+//* this is styling
 const Container = tw.div` text-white flex items-center justify-center flex-col w-full h-screen   `;
 const Header = tw.h1`text-3xl font-bold mx-5 my-1`;
 const Containing = tw.form` flex items-center justify-between flex-col w-fit h-[36rem] px-5 py-5 my-5 rounded-3xl  `;
 const Loader = tw.h2`font-bold text-red-700 `;
 const Required = tw.h6`font-bold text-red-700 rounded`;
+//* this is styling
 
 export default function App() {
   const router = useRouter();
   const { dispatch } = useContext(StoreContext);
+
+  //* I've chosen MetaMask as the connector,
   const { connect, error, isConnecting, pendingConnector } = useConnect({
     chainId: chain.rinkeby.id,
     connector: new MetaMaskConnector(),
@@ -34,6 +38,7 @@ export default function App() {
   const handlerVisible = () => setVisible(true);
   const handler = () => setLoading(true);
 
+  //* form submission handling
   const formik = useFormik({
     initialValues: {
       nftHolder: "",
@@ -55,15 +60,6 @@ export default function App() {
         .required(<Required>Required</Required>),
     }),
     onSubmit: async (values) => {
-      //! the values are as follows
-      // {
-      //*  myNFT: "0x8Ec5fAC5fCB3e9B254d5BA06eF7F74569d0fba0A"
-      //*  nftHolder1: "0xD512872bB6448aCF6926C6C503d0Ceb8002C0557";
-      //*  nftHolder2: "0x4436C8962589a491D575f7531e7f8CB79A19aEBD";
-      //*  nftContract: "0x5998AbEf6ac2105682f7799a75d4c23e423B6AbE";
-      //! New NFTs
-      //*
-      // }
       const takerData = {
         contractAddress: values.nftContract,
         takerAddress: values.nftHolder,
@@ -86,7 +82,7 @@ export default function App() {
       }
     },
   });
-
+  //* form submission handling
   return (
     <Container>
       <Head>

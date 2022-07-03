@@ -4,7 +4,7 @@ import { WagmiConfig, createClient, defaultChains, configureChains } from "wagmi
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import StoreProvider from "../store/store-context";
-const alchemyId = process.env.ALCHEMY_ID;
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID;
 
 export const { provider } = configureChains(defaultChains, [alchemyProvider({ alchemyId })]);
 
